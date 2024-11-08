@@ -1,25 +1,23 @@
-import Joi from "joi";
-import { config } from "dotenv";
+import { config } from "dotenv"
+import Joi from "joi"
 
-config();
+config()
 
 const envVariableSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid("production", "development").required(),
-    PORT: Joi.number().positive().required(),
+    PORT: Joi.number().positive().required()
   })
-  .unknown();
+  .unknown()
 
-const { value, error } = envVariableSchema
-  .prefs({ errors: { label: "key" } })
-  .validate(process.env);
+const { value, error } = envVariableSchema.prefs({ errors: { label: "key" } }).validate(process.env)
 
 if (error) {
-  throw new Error(`Config validation error: ${error.message}`);
+  throw new Error(`Config validation error: ${error.message}`)
 }
 
-const { NODE_ENV, PORT } = value;
+const { NODE_ENV, PORT } = value
 
-const APP_CONFIG = { NODE_ENV, PORT };
+const APP_CONFIG = { NODE_ENV, PORT }
 
-export { APP_CONFIG };
+export { APP_CONFIG }
