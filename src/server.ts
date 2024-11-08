@@ -1,7 +1,6 @@
-import express from "express";
+import app from "./app";
+import { APP_CONFIG } from "./env.config";
 
-const app = express();
-
-app.listen(3000, () => {
-  console.log("Server listening in port 3000");
+app.listen(APP_CONFIG.PORT, () => {
+  console.log(`Server listening in port ${APP_CONFIG.PORT}`);
 });
