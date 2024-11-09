@@ -4,6 +4,6 @@ import { toDoController } from "./todo.controller"
 
 const router = Router()
 
-router.post("/", toDoController.registerToDoItem)
+router.route("/").get(toDoController.getToDoItems).post(toDoController.registerToDoItem)
 
 export default router

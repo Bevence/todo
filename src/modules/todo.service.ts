@@ -14,6 +14,11 @@ const registerToDoItem = async (payload: IToDo) => {
   return toDo
 }
 
+const getToDoItems = () => {
+  return ToDo.find()
+}
+
 export const toDoService = {
-  registerToDoItem
+  registerToDoItem,
+  getToDoItems
 }

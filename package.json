@@ -7,6 +7,7 @@
     "build": "tsc",
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
+    "watch": "watchify public/index.js -o public/bundle.js -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -22,6 +23,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "joi": "^17.13.3",
-    "mongoose": "^8.8.0"
+    "mongoose": "^8.8.0",
+    "pug": "^3.0.3",
+    "watchify": "^4.0.0"
   }
 }

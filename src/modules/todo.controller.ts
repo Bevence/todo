@@ -17,6 +17,21 @@ const registerToDoItem = async (req: Request, res: Response, next: NextFunction)
   }
 }
 
+const getToDoItems = async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await toDoService.getToDoItems()
+
+    return res.json({
+      success: true,
+      message: "Fetched todo items successfully...",
+      data
+    })
+  } catch (error) {
+    next("Error")
+  }
+}
+
 export const toDoController = {
-  registerToDoItem: asyncHandlers(registerToDoItem)
+  registerToDoItem: asyncHandlers(registerToDoItem),
+  getToDoItems: asyncHandlers(getToDoItems)
 }
