@@ -9,13 +9,16 @@ import routes from "./route"
 
 const app = express()
 
-app.use("/todo", express.static(path.join(__dirname, "..", "public")))
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "..", "views"))
+
+// app.use("/todo", express.static(path.join(__dirname, "..", "public")))
 
 app.use(express.json())
 
 app.use("/ping", (_req: Request, res: Response) => {
   res.send("pong")
 })
-app.use("/api/v1", routes)
+app.use("/", routes)
 
 export default app

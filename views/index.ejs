@@ -44,6 +44,23 @@
         align-items: center;
       }
 
+      .item-detail {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .item-description {
+        font-size: small;
+        color: #999;
+      }
+
+      .item-data-time {
+        font-size: small;
+        color: #873c3c;
+      }
+
       .completed {
         text-decoration: line-through;
         color: #999;
@@ -105,15 +122,22 @@
   <body>
     <div class="todo-container">
       <h2>To-Do List</h2>
-      <ul>
-        <li>
-          Buy groceries
-          <div class="actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </li>
-        <li class="completed">
+      <ul id="item-list">
+        <%todos.forEach(item => {%>
+          <li>
+            <div class="item-detail">
+              <span class="item-data-time"><%= item.createdAt %></span>
+              <%= item.name%>
+              <span class="item-description"><%= item.shortDescription%></span>
+            </div>
+            <div class="actions">
+              <button class="edit-btn">Edit</button>
+              <button class="delete-btn">Delete</button>
+            </div>
+          </li>
+          
+        <%})%>
+        <!-- <li class="completed">
           Complete homework
           <div class="actions">
             <button class="edit-btn">Edit</button>
@@ -133,14 +157,13 @@
             <button class="edit-btn">Edit</button>
             <button class="delete-btn">Delete</button>
           </div>
-        </li>
+        </li> -->
       </ul>
-      <div class="add-item-container">
-        <input type="text" id="newItem" placeholder="Add a new task" />
-        <button class="add-item-btn">Add</button>
-      </div>
+        <form action="/add" method="POST" class="add-item-container">
+          <input type="text" name="name" placeholder="Todo Name" required>
+          <input type="text" name="shortDescription" placeholder="Short Description" required>
+          <button type="submit" class="add-item-btn">Add</button>
+      </form>
     </div>
-
-    <script type="module" src="./index.js"></script>
   </body>
 </html>

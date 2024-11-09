@@ -21,6 +21,7 @@
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.21.1",
     "joi": "^17.13.3",
     "mongoose": "^8.8.0",

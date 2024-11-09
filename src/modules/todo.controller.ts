@@ -21,12 +21,9 @@ const getToDoItems = async (_req: Request, res: Response, next: NextFunction) =>
   try {
     const data = await toDoService.getToDoItems()
 
-    return res.json({
-      success: true,
-      message: "Fetched todo items successfully...",
-      data
-    })
+    res.render("index", { todos: data })
   } catch (error) {
+    console.log("error", error)
     next("Error")
   }
 }
