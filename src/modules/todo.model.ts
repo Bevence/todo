@@ -1,4 +1,4 @@
-import { InferSchemaType, model, Schema } from "mongoose"
+import { model, Schema } from "mongoose"
 
 const toDoSchema = new Schema(
   {
@@ -11,6 +11,16 @@ const toDoSchema = new Schema(
       type: String,
       required: true,
       trim: true
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ["PENDING", "DONE"],
+      default: "PENDING"
+    },
+    expiredAt: {
+      type: Date,
+      required: true
     }
   },
   {

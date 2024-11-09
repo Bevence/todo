@@ -9,10 +9,10 @@ const registerToDoItem = async (req: Request, res: Response, next: NextFunction)
 
     return res.json({
       success: true,
-      message: "Registered todo item successfully...",
-      data
+      message: "Todo item registered successfully..."
     })
   } catch (error) {
+    console.log("error", error)
     next("Error")
   }
 }

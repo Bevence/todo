@@ -22,6 +22,8 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         width: 600px;
         text-align: center;
+        max-height: 80%;
+        overflow: scroll;
       }
 
       h2 {
@@ -95,6 +97,16 @@
       .add-item-container {
         margin-top: 20px;
         display: flex;
+        flex-direction: column;
+      }
+
+      .form-item{
+        width: 100%;
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-top: 15px;
       }
 
       input[type="text"] {
@@ -114,9 +126,55 @@
         cursor: pointer;
       }
 
+      .add-item-btn-main{
+        margin-left: 10px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+      }
+
       .add-item-btn:hover {
         background-color: #45a049;
       }
+
+      /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
     </style>
   </head>
   <body>
@@ -124,7 +182,7 @@
       <h2>To-Do List</h2>
       <ul id="item-list">
         <%todos.forEach(item => {%>
-          <li>
+          <li class="<%= item.status === 'DONE' ? 'completed' : ''%>">
             <div class="item-detail">
               <span class="item-data-time"><%= item.createdAt %></span>
               <%= item.name%>
@@ -137,33 +195,29 @@
           </li>
           
         <%})%>
-        <!-- <li class="completed">
-          Complete homework
-          <div class="actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </li>
-        <li>
-          Read a book
-          <div class="actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </li>
-        <li>
-          Exercise
-          <div class="actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </li> -->
+       
       </ul>
-        <form action="/add" method="POST" class="add-item-container">
-          <input type="text" name="name" placeholder="Todo Name" required>
-          <input type="text" name="shortDescription" placeholder="Short Description" required>
-          <button type="submit" class="add-item-btn">Add</button>
-      </form>
+      
     </div>
+    <button id="openModalBtn" class="add-item-btn add-item-btn-main">+</button>
+
+
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span id="closeModalBtn" class="close">&times;</span>
+        <form id="todoForm" class="add-item-container">
+          <input type="text" name="name" id="name" placeholder="Todo Name" required class="form-item">
+          <textarea name="shortDescription" id="shortDescription" placeholder="Short Description" required class="form-item" rows="4"></textarea>
+          <div class="form-item">
+            <label for="dateTime">Expired At</label>
+            <input type="datetime-local" id="expiredAt" name="expiredAt" required>
+          </div>
+          <button type="submit" class="add-item-btn form-item">Add</button>
+      </form>
+      </div>
+    </div>
+  
+    <script src="/static/script.js"></script>
   </body>
 </html>
