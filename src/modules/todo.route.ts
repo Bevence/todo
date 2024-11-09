@@ -1,9 +1,9 @@
 import { Router } from "express"
 
+import { toDoController } from "./todo.controller"
+
 const router = Router()
 
-router.get("", (req, res) => {
-  res.send("Todo router")
-})
+router.post("/", toDoController.registerToDoItem)
 
 export default router
