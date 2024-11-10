@@ -10,9 +10,20 @@
   <body>
     <div class="todo-container">
       <h2>To-Do List</h2>
+
+       <div class="filter-container">
+        <label for="filter">Filter By Expiration:</label>
+        <select id="filter" onchange="filterTasks()">
+          <option value="all">All</option>
+          <option value="DONE">Done</option>
+          <option value="EXPIRED">Expired</option>
+          <option value="UPCOMING">Upcoming</option>
+        </select>
+      </div>
+
       <ul id="item-list">
         <%todos.forEach(item => {%>
-          <li class="<%= item.status === 'DONE' ? 'completed' : ''%>">
+          <li class="<%= item.status === 'DONE' ? 'completed' : ''%>" data-status="<%= item.status %>" data-id="<%= item.id %>">
             <div class="item-detail">
               <span class="item-data-time"><%= item.expiredAt %></span>
               <%= item.name%>

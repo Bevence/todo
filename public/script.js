@@ -113,3 +113,30 @@ function handleDelete(id) {
       console.error("Error:", error)
     })
 }
+
+function filterTasks() {
+  const filterValue = document.getElementById("filter").value
+  const items = document.querySelectorAll("#item-list li")
+
+  items.forEach((item) => {
+    const expiredAt = new Date(item.querySelector(".item-data-time").textContent)
+    const now = new Date()
+    const status = item.getAttribute("data-status")
+
+    let shouldShow = true
+
+    if (filterValue === "EXPIRED" && expiredAt >= now) {
+      shouldShow = false
+    }
+
+    if (filterValue === "UPCOMING" && expiredAt < now) {
+      shouldShow = false
+    }
+
+    if (filterValue === "DONE" && status !== "DONE") {
+      shouldShow = false
+    }
+
+    item.style.display = shouldShow ? "flex" : "none"
+  })
+}
