@@ -2,13 +2,6 @@ import { IToDo } from "./todo.interface"
 import ToDo from "./todo.model"
 
 const registerToDoItem = async (payload: IToDo) => {
-  // const existingToDo = await ToDo.findOne({
-  //     equals: {
-
-  //     }
-  // })
-
-  console.log("payload", payload)
   const toDo = await ToDo.create(payload)
 
   return toDo
@@ -18,7 +11,17 @@ const getToDoItems = () => {
   return ToDo.find()
 }
 
+const updateToDoItemById = (id: string, payload: Partial<IToDo>) => {
+  return ToDo.findByIdAndUpdate(id, payload)
+}
+
+const deleteToDoItemById = (id: string) => {
+  return ToDo.findByIdAndDelete(id)
+}
+
 export const toDoService = {
   registerToDoItem,
-  getToDoItems
+  getToDoItems,
+  updateToDoItemById,
+  deleteToDoItemById
 }

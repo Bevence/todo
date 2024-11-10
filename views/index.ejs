@@ -4,178 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f4f4f4;
-        margin: 0;
-      }
+    <link rel="stylesheet" href="static/index.css">
 
-      .todo-container {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 600px;
-        text-align: center;
-        max-height: 80%;
-        overflow: scroll;
-      }
-
-      h2 {
-        margin: 0 0 20px;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-      }
-
-      li {
-        background-color: #f9f9f9;
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 4px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .item-detail {
-        display: flex;
-        justify-content: start;
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .item-description {
-        font-size: small;
-        color: #999;
-      }
-
-      .item-data-time {
-        font-size: small;
-        color: #873c3c;
-      }
-
-      .completed {
-        text-decoration: line-through;
-        color: #999;
-        background-color: #d3ffd3;
-      }
-
-      .actions {
-        display: flex;
-        gap: 5px;
-      }
-
-      .edit-btn,
-      .delete-btn {
-        background-color: #e0e0e0;
-        color: #333;
-        border: none;
-        border-radius: 4px;
-        padding: 5px 8px;
-        cursor: pointer;
-        font-size: 12px;
-      }
-
-      .edit-btn:hover {
-        background-color: #ffd700;
-      }
-
-      .delete-btn:hover {
-        background-color: #ff6347;
-        color: white;
-      }
-
-      .add-item-container {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .form-item{
-        width: 100%;
-        padding: 8px;
-        margin-right: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-top: 15px;
-      }
-
-      input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        margin-right: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-
-      .add-item-btn {
-        padding: 8px 15px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      .add-item-btn-main{
-        margin-left: 10px;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        font-size: 30px;
-      }
-
-      .add-item-btn:hover {
-        background-color: #45a049;
-      }
-
-      /* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
-}
-
-/* Modal content */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-    </style>
   </head>
   <body>
     <div class="todo-container">
@@ -189,8 +19,14 @@
               <span class="item-description"><%= item.shortDescription%></span>
             </div>
             <div class="actions">
-              <button class="edit-btn">Edit</button>
-              <button class="delete-btn">Delete</button>
+              <% if(item.status !== "DONE"){ %>
+                <button class="edit-btn" id="editBtn" onclick="handleEdit('<%= item.id %>','<%= item.name %>','<%= item.shortDescription %>','<%= item.expiredAt %>')">Edit</button>
+                <%}%>
+                <button class="delete-btn" id="deleteBtn" onclick="handleDelete('<%= item.id %>')">Delete</button>
+              <% if(item.status !== "DONE"){ %>
+                <button class="done-btn" id="doneBtn" onclick="handleDone('<%= item.id %>')">Done</button>
+              <%}%>
+              
             </div>
           </li>
           
@@ -213,7 +49,7 @@
             <label for="dateTime">Expired At</label>
             <input type="datetime-local" id="expiredAt" name="expiredAt" required>
           </div>
-          <button type="submit" class="add-item-btn form-item">Add</button>
+          <button type="submit" class="add-item-btn form-item" id="todoItemBtn">Add</button>
       </form>
       </div>
     </div>

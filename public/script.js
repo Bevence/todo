@@ -2,6 +2,8 @@ const modal = document.getElementById("myModal")
 const openModalBtn = document.getElementById("openModalBtn")
 const closeModalBtn = document.getElementById("closeModalBtn")
 const form = document.getElementById("todoForm")
+let updateStatus = false
+let updateId
 
 openModalBtn.onclick = function () {
   modal.style.display = "block"
@@ -26,21 +28,80 @@ form.addEventListener("submit", function (event) {
     shortDescription: document.getElementById("shortDescription").value,
     expiredAt: document.getElementById("expiredAt").value
   }
-  console.log("formData", formData)
 
-  fetch("/todo", {
-    method: "POST",
+  if (updateStatus) {
+    fetch(`/todo/${updateId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => response.json())
+      .then(() => {
+        modal.style.display = "none"
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  } else {
+    fetch("/todo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+      .then((response) => response.json())
+      .then(() => {
+        modal.style.display = "none"
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  }
+})
+
+function handleEdit(id, name, shortDescription, expiredAt) {
+  modal.style.display = "block"
+
+  document.getElementById("name").value = name
+  document.getElementById("shortDescription").value = shortDescription
+  document.getElementById("expiredAt").value = new Date(expiredAt).toISOString().slice(0, 16)
+
+  document.getElementById("todoItemBtn").innerHTML = "Update"
+
+  updateStatus = true
+  updateId = id
+}
+
+function handleDone(id) {
+  fetch(`/todo/${id}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(formData)
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      modal.style.display = "none"
-      window.location.reload()
+    body: JSON.stringify({
+      status: "DONE"
     })
+  })
+    .then(() => window.location.reload())
     .catch((error) => {
       console.error("Error:", error)
     })
-})
+}
+
+function handleDelete(id) {
+  fetch(`/todo/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(() => window.location.reload())
+    .catch((error) => {
+      console.error("Error:", error)
+    })
+}
