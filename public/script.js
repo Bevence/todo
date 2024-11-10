@@ -38,12 +38,16 @@ form.addEventListener("submit", function (event) {
       body: JSON.stringify(formData)
     })
       .then((response) => response.json())
-      .then(() => {
-        modal.style.display = "none"
-        window.location.reload()
+      .then((data) => {
+        if (data.success) {
+          modal.style.display = "none"
+          window.location.reload()
+        } else {
+          alert(data.message)
+        }
       })
       .catch((error) => {
-        console.error("Error:", error)
+        alert("Something went wrong")
       })
   } else {
     fetch("/todo", {
@@ -54,12 +58,16 @@ form.addEventListener("submit", function (event) {
       body: JSON.stringify(formData)
     })
       .then((response) => response.json())
-      .then(() => {
-        modal.style.display = "none"
-        window.location.reload()
+      .then((data) => {
+        if (data.success) {
+          modal.style.display = "none"
+          window.location.reload()
+        } else {
+          alert(data.message)
+        }
       })
       .catch((error) => {
-        console.error("Error:", error)
+        alert("Something went wrong")
       })
   }
 })

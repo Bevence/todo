@@ -1,10 +1,14 @@
 import { NextFunction, Request, Response } from "express"
+import Joi from "joi"
 
 import asyncHandlers from "../helpers/asyncHandlers"
 import { toDoService } from "./todo.service"
+import { todoEditSchema, todoSchema } from "./todo.validation"
 
 const registerToDoItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    await todoSchema.validateAsync(req.body)
+
     const data = await toDoService.registerToDoItem(req.body)
 
     return res.json({
@@ -13,7 +17,11 @@ const registerToDoItem = async (req: Request, res: Response, next: NextFunction)
       data
     })
   } catch (error) {
-    next("Error while registering todo item...")
+    let errorMessages
+    if (error instanceof Joi.ValidationError) {
+      errorMessages = error.details[0].message
+    }
+    next(errorMessages || "Error while registering todo item...")
   }
 }
 
@@ -25,6 +33,8 @@ const getToDoItems = async (_req: Request, res: Response, next: NextFunction) =>
 
 const updateToDoItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    await todoEditSchema.validateAsync(req.body)
+
     const data = await toDoService.updateToDoItemById(req.params.id, req.body)
 
     return res.json({
@@ -33,7 +43,11 @@ const updateToDoItems = async (req: Request, res: Response, next: NextFunction) 
       data
     })
   } catch (error) {
-    next("Error while updating todo item...")
+    let errorMessages
+    if (error instanceof Joi.ValidationError) {
+      errorMessages = error.details[0].message
+    }
+    next(errorMessages || "Error while registering todo item...")
   }
 }
 

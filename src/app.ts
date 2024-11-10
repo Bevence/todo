@@ -1,6 +1,6 @@
 import path from "path"
 
-import express, { Request, Response } from "express"
+import express, { NextFunction, Request, Response } from "express"
 
 import "./env.config"
 import "./db.config"
@@ -20,5 +20,12 @@ app.use("/ping", (_req: Request, res: Response) => {
   res.send("pong")
 })
 app.use("/", routes)
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(400).json({
+    success: false,
+    message: err.message ?? err
+  })
+})
 
 export default app

@@ -14,7 +14,7 @@
         <%todos.forEach(item => {%>
           <li class="<%= item.status === 'DONE' ? 'completed' : ''%>">
             <div class="item-detail">
-              <span class="item-data-time"><%= item.createdAt %></span>
+              <span class="item-data-time"><%= item.expiredAt %></span>
               <%= item.name%>
               <span class="item-description"><%= item.shortDescription%></span>
             </div>
